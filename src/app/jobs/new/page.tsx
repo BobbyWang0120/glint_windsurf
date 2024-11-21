@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { departments } from '@/app/types/job';
 import Link from 'next/link';
 import Select from '@/app/components/Select';
+import { useRouter } from 'next/navigation';
 
 // 预设的职位描述文本
 const ENHANCED_DESCRIPTION = `We are seeking a talented professional to join our dynamic team. The ideal candidate will:
@@ -17,6 +18,7 @@ const ENHANCED_DESCRIPTION = `We are seeking a talented professional to join our
 This role offers opportunities for professional growth and the chance to work on impactful projects in a supportive environment.`;
 
 export default function NewJobPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     title: '',
     department: '',
@@ -48,6 +50,8 @@ export default function NewJobPage() {
     e.preventDefault();
     // 这里暂时只打印表单数据
     console.log('Form submitted:', formData);
+    // 跳转到加载页面
+    router.push('/jobs/1/matching/loading');  // 使用模拟的job id
   };
 
   return (
