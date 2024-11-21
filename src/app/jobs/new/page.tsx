@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { departments } from '@/app/types/job';
 import Link from 'next/link';
+import Select from '@/app/components/Select';
 
 // 预设的职位描述文本
 const ENHANCED_DESCRIPTION = `We are seeking a talented professional to join our dynamic team. The ideal candidate will:
@@ -103,21 +104,15 @@ export default function NewJobPage() {
             <label htmlFor="department" className="block text-sm font-medium text-gray-700">
               Department
             </label>
-            <select
+            <Select
               name="department"
               id="department"
               required
               value={formData.department}
-              onChange={handleChange}
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-            >
-              <option value="">Select a department</option>
-              {departments.map((dept) => (
-                <option key={dept} value={dept}>
-                  {dept}
-                </option>
-              ))}
-            </select>
+              onChange={(value) => handleChange({ target: { name: 'department', value } } as any)}
+              options={departments}
+              placeholder="Select a department"
+            />
           </div>
 
           {/* 地点 */}
