@@ -1,5 +1,6 @@
 // 主页面组件
 import { mockJobs } from './data/mockJobs';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -27,9 +28,12 @@ export default function Home() {
             <h2 className="text-2xl font-bold text-gray-900">Job Listings</h2>
             <p className="mt-1 text-sm text-gray-500">Manage your job postings and track candidates</p>
           </div>
-          <button className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors">
+          <Link
+            href="/jobs/new"
+            className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors"
+          >
             Post New Job
-          </button>
+          </Link>
         </div>
 
         {/* 职位列表 */}

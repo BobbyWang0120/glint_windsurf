@@ -4,7 +4,23 @@ export interface Job {
   title: string;
   publishedAt: string;
   candidatesCount: number;
-  department: string;
+  department: Department;
   location: string;
   status: 'active' | 'closed';
+  description?: string; // 职位描述
 }
+
+// 部门选项
+export const departments = [
+  'Engineering',
+  'Product',
+  'Design',
+  'Marketing',
+  'Sales',
+  'Human Resources',
+  'Finance',
+  'Operations',
+  'Data',
+] as const;
+
+export type Department = typeof departments[number];
