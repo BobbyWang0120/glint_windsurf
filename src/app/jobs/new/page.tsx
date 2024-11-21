@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { departments } from '@/app/types/job';
 import Link from 'next/link';
 import Select from '@/app/components/Select';
+import TextLoadingAnimation from '@/app/components/TextLoadingAnimation';
 import { useRouter } from 'next/navigation';
 
 // 预设的职位描述文本
@@ -25,6 +26,7 @@ export default function NewJobPage() {
     location: '',
     description: '',
   });
+  const [isEnhancing, setIsEnhancing] = useState(false);
 
   // 处理表单输入变化
   const handleChange = (
@@ -39,10 +41,15 @@ export default function NewJobPage() {
 
   // 处理AI润色
   const handleEnhanceDescription = () => {
-    setFormData((prev) => ({
-      ...prev,
-      description: ENHANCED_DESCRIPTION,
-    }));
+    setIsEnhancing(true);
+    // 清空当前描述
+    setFormData((prev) => ({ ...prev, description: '' }));
+    
+    // 1秒后显示增强的描述
+    setTimeout(() => {
+      setFormData((prev) => ({ ...prev, description: ENHANCED_DESCRIPTION }));
+      setIsEnhancing(false);
+    }, 1000);
   };
 
   // 处理表单提交
@@ -141,19 +148,26 @@ export default function NewJobPage() {
               Job Description
             </label>
             <div className="mt-1 relative">
-              <textarea
-                name="description"
-                id="description"
-                required
-                rows={8}
-                value={formData.description}
-                onChange={handleChange}
-                className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-              />
+              {isEnhancing ? (
+                <div className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm min-h-[200px]">
+                  <TextLoadingAnimation />
+                </div>
+              ) : (
+                <textarea
+                  name="description"
+                  id="description"
+                  required
+                  rows={8}
+                  value={formData.description}
+                  onChange={handleChange}
+                  className="block w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
+                />
+              )}
               <button
                 type="button"
                 onClick={handleEnhanceDescription}
-                className="absolute bottom-2 right-2 p-2 text-gray-400 hover:text-gray-600"
+                disabled={isEnhancing}
+                className={`absolute bottom-2 right-2 p-2 text-gray-400 hover:text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-opacity`}
                 title="Enhance with AI"
               >
                 <svg
