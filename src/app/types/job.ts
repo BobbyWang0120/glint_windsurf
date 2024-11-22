@@ -21,6 +21,7 @@ export const departments = [
   'Finance',
   'Operations',
   'Data',
-] as const;
+  'Legal',
+];
 
 export type Department = typeof departments[number];
