@@ -3,6 +3,7 @@
 import { useAuth } from './contexts/AuthContext';
 import JobListings from './components/JobListings';
 import { useEffect, useRef, useState } from 'react';
+import LoadingAnimation from './components/LoadingAnimation';
 import { start } from 'repl';
 
 // 模拟候选人数据
@@ -32,6 +33,7 @@ const liveTranslationMessages = [
 
 export default function Home() {
   const { isLoggedIn, login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showCandidates, setShowCandidates] = useState(false);
   const [visibleCandidates, setVisibleCandidates] = useState<number[]>([]);
@@ -42,6 +44,14 @@ export default function Home() {
   const progressRef = useRef<HTMLDivElement>(null);
   const animationStartedRef = useRef(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 处理按钮点击的函数
+  const handleButtonClick = async () => {
+    setIsLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    login();
+    setIsLoading(false);
+  };
 
   // 清理函数
   const cleanupAnimation = () => {
@@ -179,6 +189,7 @@ export default function Home() {
 
   return (
     <div className="bg-white">
+      {isLoading && <LoadingAnimation />}
       {/* Hero Section */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-white" />
@@ -193,13 +204,13 @@ export default function Home() {
             </p>
             <div className="flex justify-center gap-6">
               <button 
-                onClick={login}
+                onClick={handleButtonClick}
                 className="bg-black text-white px-8 py-4 rounded-lg text-lg font-medium hover:bg-gray-800 transition-all transform hover:scale-105 duration-200 shadow-lg"
               >
                 Get Started
               </button>
               <button 
-                onClick={login}
+                onClick={handleButtonClick}
                 className="border-2 border-black text-black px-8 py-4 rounded-lg text-lg font-medium hover:bg-black hover:text-white transition-all transform hover:scale-105 duration-200"
               >
                 Watch Demo
@@ -448,7 +459,7 @@ export default function Home() {
             </div>
             <div className="mt-12 sm:mx-auto sm:max-w-lg sm:flex sm:justify-center">
               <button
-                onClick={login}
+                onClick={handleButtonClick}
                 className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-xl text-black bg-white hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 md:py-4 md:text-lg md:px-10"
               >
                 Get Started
