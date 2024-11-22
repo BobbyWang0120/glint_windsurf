@@ -341,7 +341,7 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Interface Translation */}
-            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 min-h-[400px] flex flex-col">
+            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 h-[400px] flex flex-col">
               <div className="flex-none">
                 <div className="bg-black rounded-xl p-4 inline-block mb-6">
                   <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -369,7 +369,7 @@ export default function Home() {
             </div>
 
             {/* Message Translation */}
-            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 min-h-[400px] flex flex-col">
+            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 h-[400px] flex flex-col">
               <div className="flex-none">
                 <div className="bg-black rounded-xl p-4 inline-block mb-6">
                   <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -387,7 +387,7 @@ export default function Home() {
                     </div>
                   </div>
                   <div className="flex justify-start relative">
-                    <div className="bg-black text-white rounded-lg px-4 py-2 transition-all duration-300 w-fit">
+                    <div className="bg-black text-white rounded-lg px-4 py-2 w-fit">
                       <div className="relative">
                         {translatedMessages.map((msg, index) => (
                           <div
@@ -407,7 +407,7 @@ export default function Home() {
             </div>
 
             {/* Live Translation */}
-            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 min-h-[400px] flex flex-col">
+            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 h-[400px] flex flex-col">
               <div className="flex-none">
                 <div className="bg-black rounded-xl p-4 inline-block mb-6">
                   <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
