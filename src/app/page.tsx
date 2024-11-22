@@ -183,10 +183,6 @@ export default function Home() {
     };
   }, [currentLiveIndex]);
 
-  if (isLoggedIn) {
-    return <JobListings />;
-  }
-
   return (
     <div className="bg-white">
       {isLoading && <LoadingAnimation />}

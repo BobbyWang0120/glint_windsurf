@@ -41,7 +41,7 @@ export default function Navbar() {
                       href="/jobs" 
                       className="px-4 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-all transform hover:scale-105 duration-200 shadow-sm"
                     >
-                      Go to Glint
+                      Dashboard
                     </Link>
                   ) : (
                     <span className="text-sm font-medium text-gray-700">Welcome, Glint</span>
