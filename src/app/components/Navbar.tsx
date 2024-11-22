@@ -1,28 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
-  // 在组件加载时检查登录状态
-  useEffect(() => {
-    const loginStatus = localStorage.getItem('isLoggedIn');
-    setIsLoggedIn(loginStatus === 'true');
-  }, []);
-
-  // 处理登录
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-    localStorage.setItem('isLoggedIn', 'true');
-  };
-
-  // 处理登出
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.setItem('isLoggedIn', 'false');
-  };
+  const { isLoggedIn, login, logout } = useAuth();
 
   return (
     <nav className="border-b border-gray-200 bg-white">
@@ -38,7 +20,7 @@ export default function Navbar() {
               <>
                 <span className="text-sm text-gray-500">Welcome, John Doe</span>
                 <button 
-                  onClick={handleLogout}
+                  onClick={logout}
                   className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
                 >
                   Logout
@@ -47,13 +29,13 @@ export default function Navbar() {
             ) : (
               <div className="space-x-4">
                 <button 
-                  onClick={handleLogin}
+                  onClick={login}
                   className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
                 >
                   Login
                 </button>
                 <button 
-                  onClick={handleLogin}
+                  onClick={login}
                   className="text-sm bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors"
                 >
                   Sign Up

@@ -1,15 +1,6 @@
 'use client';
 
-import { useAuth } from './contexts/AuthContext';
-import JobListings from './components/JobListings';
-
-export default function Home() {
-  const { isLoggedIn, login } = useAuth();
-
-  if (isLoggedIn) {
-    return <JobListings />;
-  }
-
+export default function LandingPage() {
   return (
     <div className="bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,13 +15,19 @@ export default function Home() {
           </p>
           <div className="flex justify-center gap-4">
             <button 
-              onClick={login}
+              onClick={() => {
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.reload();
+              }}
               className="bg-black text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-gray-800 transition-colors"
             >
               Get Started
             </button>
             <button 
-              onClick={login}
+              onClick={() => {
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.reload();
+              }}
               className="border border-gray-300 text-gray-700 px-8 py-3 rounded-md text-lg font-medium hover:bg-gray-50 transition-colors"
             >
               Learn More
