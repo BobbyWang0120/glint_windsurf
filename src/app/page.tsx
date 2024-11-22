@@ -11,11 +11,33 @@ const mockCandidates = [
   { id: 3, name: "David Kim", role: "Product Manager", match: "93%" },
 ];
 
+// 模拟翻译消息 - 添加一些较长的消息来测试布局
+const translatedMessages = [
+  { lang: '简体中文', text: '你好！很高兴认识你。' },
+  { lang: '繁體中文', text: '你好！很高興認識你。' },
+  { lang: 'Español', text: '¡Hola! Encantado de conocerte.' },
+  { lang: '日本語', text: 'こんにちは！よろしくお願いします。' },
+  { lang: '한국어', text: '안녕하세요! 만나서 반갑습니다.' },
+];
+
+// 视频会议翻译示例文本
+const liveTranslationMessages = [
+  { lang: '简体中文', text: '这次会议的主要目标是讨论新产品的发展方向。' },
+  { lang: '繁體中文', text: '這次會議的主要目標是討論新產品的發展方向。' },
+  { lang: 'Español', text: 'El objetivo principal de esta reunión es discutir la dirección del nuevo producto.' },
+  { lang: '日本語', text: '今回の会議の主な目的は、新製品の開発方向について話し合うことです。' },
+  { lang: '한국어', text: '이번 회의의 주요 목표는 새로운 제품의 개발 방향을 논의하는 것입니다.' },
+];
+
 export default function Home() {
   const { isLoggedIn, login } = useAuth();
   const [progress, setProgress] = useState(0);
   const [showCandidates, setShowCandidates] = useState(false);
   const [visibleCandidates, setVisibleCandidates] = useState<number[]>([]);
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [currentLiveIndex, setCurrentLiveIndex] = useState(0);
+  const [streamText, setStreamText] = useState('');
+  const streamRef = useRef<NodeJS.Timeout | null>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const animationStartedRef = useRef(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
@@ -103,6 +125,52 @@ export default function Home() {
       cleanupAnimation();
     };
   }, []);
+
+  // 消息轮播效果
+  useEffect(() => {
+    const messageInterval = setInterval(() => {
+      setCurrentMessageIndex((prev) => (prev + 1) % translatedMessages.length);
+    }, 2000); // 改为2秒切换一次
+
+    return () => clearInterval(messageInterval);
+  }, []);
+
+  // 流式文本效果
+  useEffect(() => {
+    const startStreaming = () => {
+      const targetText = liveTranslationMessages[currentLiveIndex].text;
+      let currentChar = 0;
+      
+      const stream = () => {
+        if (currentChar <= targetText.length) {
+          setStreamText(targetText.slice(0, currentChar));
+          currentChar++;
+          streamRef.current = setTimeout(stream, 50);
+        } else {
+          // 当前文本播放完成后，等待一段时间后切换到下一个
+          setTimeout(() => {
+            setCurrentLiveIndex((prev) => (prev + 1) % liveTranslationMessages.length);
+          }, 1000);
+        }
+      };
+      
+      stream();
+    };
+
+    // 清理之前的定时器
+    if (streamRef.current) {
+      clearTimeout(streamRef.current);
+    }
+    
+    // 开始新的流式效果
+    startStreaming();
+
+    return () => {
+      if (streamRef.current) {
+        clearTimeout(streamRef.current);
+      }
+    };
+  }, [currentLiveIndex]);
 
   if (isLoggedIn) {
     return <JobListings />;
@@ -273,62 +341,94 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Interface Translation */}
-            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300">
-              <div className="bg-black rounded-xl p-4 inline-block mb-6">
-                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12 21l-5-10-5 10M4 10l12-3 9 1 1 2-24 4-5 1 3 1 16-2 2-16-2-1-5-1-7 1-5-2-3-2-2-2-5 3" />
-                </svg>
+            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 min-h-[400px] flex flex-col">
+              <div className="flex-none">
+                <div className="bg-black rounded-xl p-4 inline-block mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-bold mb-4">Interface Translation</h3>
+                <p className="text-gray-600 mb-6">Use the platform in your preferred language</p>
               </div>
-              <h3 className="text-xl font-bold mb-4">Interface Translation</h3>
-              <p className="text-gray-600 mb-6">Use the platform in your preferred language</p>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1 bg-gray-200 rounded-full text-sm">English</span>
-                <span className="px-3 py-1 bg-gray-200 rounded-full text-sm">中文</span>
-                <span className="px-3 py-1 bg-gray-200 rounded-full text-sm">日本語</span>
-                <span className="px-3 py-1 bg-gray-200 rounded-full text-sm">한국어</span>
+              <div className="flex-grow flex items-center">
+                <div className="w-full relative bg-white rounded-lg shadow-inner overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-full h-full relative">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent animate-shine"></div>
+                      <div className="flex items-center justify-center h-full">
+                        <div className="text-center">
+                          <div className="text-sm font-medium text-gray-900">50+ Languages Supported</div>
+                          <div className="text-xs text-gray-500 mt-1">Global accessibility for everyone</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
             {/* Message Translation */}
-            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300">
-              <div className="bg-black rounded-xl p-4 inline-block mb-6">
-                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-4">Message Translation</h3>
-              <p className="text-gray-600 mb-6">Chat in your native language</p>
-              <div className="space-y-3">
-                <div className="flex justify-end">
-                  <div className="bg-black text-white rounded-lg px-4 py-2 max-w-xs">
-                    你好，很高兴认识你！
-                  </div>
+            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 min-h-[400px] flex flex-col">
+              <div className="flex-none">
+                <div className="bg-black rounded-xl p-4 inline-block mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                  </svg>
                 </div>
-                <div className="flex justify-start">
-                  <div className="bg-gray-200 rounded-lg px-4 py-2 max-w-xs">
-                    Hello, nice to meet you too!
+                <h3 className="text-xl font-bold mb-4">Message Translation</h3>
+                <p className="text-gray-600 mb-6">Chat in your native language</p>
+              </div>
+              <div className="flex-grow flex items-center">
+                <div className="space-y-3 w-full">
+                  <div className="flex justify-end">
+                    <div className="bg-gray-200 rounded-lg px-4 py-2 max-w-xs">
+                      Hello, nice to meet you!
+                    </div>
+                  </div>
+                  <div className="flex justify-start relative">
+                    <div className="bg-black text-white rounded-lg px-4 py-2 transition-all duration-300 w-fit">
+                      <div className="relative">
+                        {translatedMessages.map((msg, index) => (
+                          <div
+                            key={msg.lang}
+                            className={`transition-opacity duration-300 ${
+                              index === currentMessageIndex ? 'opacity-100 relative' : 'opacity-0 absolute inset-0'
+                            }`}
+                          >
+                            {msg.text}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Video Call Translation */}
-            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300">
-              <div className="bg-black rounded-xl p-4 inline-block mb-6">
-                <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold mb-4">Video Call Translation</h3>
-              <p className="text-gray-600 mb-6">Real-time interview interpretation</p>
-              <div className="bg-gray-200 rounded-lg p-4">
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  <span className="text-sm text-gray-500">Live Translation</span>
+            {/* Live Translation */}
+            <div className="bg-gray-50 rounded-2xl p-8 transform hover:scale-105 transition-all duration-300 min-h-[400px] flex flex-col">
+              <div className="flex-none">
+                <div className="bg-black rounded-xl p-4 inline-block mb-6">
+                  <svg className="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                  </svg>
                 </div>
-                <div className="space-y-2">
-                  <div className="h-1 bg-black rounded-full"></div>
-                  <div className="h-1 bg-black rounded-full"></div>
+                <h3 className="text-xl font-bold mb-4">Live Translation</h3>
+                <p className="text-gray-600 mb-6">Real-time translation during video calls</p>
+              </div>
+              <div className="flex-grow">
+                <div className="bg-white rounded-lg p-4 h-full shadow-inner flex flex-col">
+                  <div className="flex-none flex items-center space-x-2 mb-4">
+                    <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                    <span className="text-sm text-gray-500">Live</span>
+                  </div>
+                  <div className="flex-grow flex items-center">
+                    <div className="font-mono text-sm text-gray-800 w-full">
+                      {streamText}
+                      <span className="animate-pulse">|</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
