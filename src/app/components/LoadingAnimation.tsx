@@ -5,13 +5,10 @@ import React from 'react';
 const LoadingAnimation: React.FC = () => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-white dark:bg-black z-50">
-      <div className="relative">
-        {/* 主要加载圆环 */}
-        <div className="w-16 h-16 border-4 border-gray-200 rounded-full animate-spin border-t-gray-800 dark:border-gray-700 dark:border-t-gray-200"></div>
-        
-        {/* 加载文字 */}
-        <div className="mt-4 text-center text-gray-800 dark:text-gray-200 font-mono text-sm">
-          Loading...
+      <div className="relative w-24 h-24">
+        <div className="absolute inset-0">
+          <div className="w-full h-full border-4 border-gray-200 rounded-full"></div>
+          <div className="absolute inset-0 border-4 border-black rounded-full animate-spin border-t-transparent"></div>
         </div>
       </div>
     </div>
