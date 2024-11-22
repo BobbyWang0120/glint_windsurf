@@ -35,7 +35,7 @@ export default function Navbar() {
             <div className="flex items-center space-x-4">
               {isLoggedIn ? (
                 <>
-                  <span className="text-sm text-gray-500">Welcome, John Doe</span>
+                  <span className="text-sm text-gray-500">Welcome, Glint</span>
                   <button 
                     onClick={logout}
                     className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
