@@ -353,16 +353,12 @@ export default function Home() {
                 <p className="text-gray-600 mb-6">Use the platform in your preferred language</p>
               </div>
               <div className="flex-grow flex items-center">
-                <div className="w-full relative bg-white rounded-lg shadow-inner overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-full h-full relative">
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent animate-shine"></div>
-                      <div className="flex items-center justify-center h-full">
-                        <div className="text-center">
-                          <div className="text-sm font-medium text-gray-900">50+ Languages Supported</div>
-                          <div className="text-xs text-gray-500 mt-1">Global accessibility for everyone</div>
-                        </div>
-                      </div>
+                <div className="w-full h-full bg-white rounded-lg shadow-inner overflow-hidden">
+                  <div className="h-full flex items-center justify-center relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent animate-shine"></div>
+                    <div className="text-center relative z-10">
+                      <div className="text-sm font-medium text-gray-900">50+ Languages Supported</div>
+                      <div className="text-xs text-gray-500 mt-1">Global accessibility for everyone</div>
                     </div>
                   </div>
                 </div>
