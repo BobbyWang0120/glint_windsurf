@@ -1,22 +1,27 @@
 'use client';
 
-import { mockCandidates } from '@/app/data/mockCandidates';
+import { mockCandidates } from '../../../../data/mockCandidates';
 import Link from 'next/link';
-import MatchScore from '@/app/components/MatchScore';
+import MatchScore from '../../../../components/MatchScore';
 
 export default function ResultsPage() {
   return (
-    <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-      <div className="text-center mb-12">
-        <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-          AI-Matched Candidates
-        </h2>
-        <p className="mt-4 text-lg text-gray-500">
-          Here are the best matches for your job posting
-        </p>
+    <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+      {/* 页面标题和操作按钮 */}
+      <div className="flex justify-between items-center mb-8">
+        <div>
+          <h2 className="text-2xl font-bold text-gray-900">AI-Matched Candidates</h2>
+          <p className="mt-1 text-sm text-gray-500">Found {mockCandidates.length} potential matches for your job posting</p>
+        </div>
+        <Link
+          href="/jobs"
+          className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors"
+        >
+          Back to Jobs
+        </Link>
       </div>
 
-      <div className="mt-12 space-y-6">
+      <div className="space-y-6">
         {mockCandidates.map((candidate) => (
           <div
             key={candidate.id}
@@ -45,15 +50,6 @@ export default function ResultsPage() {
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="mt-12 text-center">
-        <Link
-          href="/jobs"
-          className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-black hover:bg-gray-800"
-        >
-          Back to Jobs
-        </Link>
       </div>
     </div>
   );
