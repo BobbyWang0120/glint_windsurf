@@ -3,6 +3,7 @@
 import { useAuth } from './contexts/AuthContext';
 import JobListings from './components/JobListings';
 import { useEffect, useRef, useState } from 'react';
+import { start } from 'repl';
 
 // 模拟候选人数据
 const mockCandidates = [
@@ -117,7 +118,7 @@ export default function Home() {
       observer.disconnect();
       cleanupAnimation();
     };
-  }, [progress]); // 添加 progress 作为依赖，以便能够从中断处继续
+  }, [progress, startAnimation]); // 添加 progress 作为依赖，以便能够从中断处继续
 
   // 组件卸载时清理
   useEffect(() => {
