@@ -436,45 +436,45 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Stats Section */}
-      <div className="bg-black text-white py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-16">
-            <div className="text-center">
-              <div className="text-5xl font-bold mb-2">95%</div>
-              <div className="text-gray-400">Match Rate</div>
+      {/* CTA Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl text-white p-12 sm:p-16 shadow-2xl relative overflow-hidden">
+          <div className="absolute inset-0 bg-black/30 backdrop-blur-sm"></div>
+          <div className="relative">
+            <div className="sm:text-center">
+              <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Ready to transform your hiring process?
+              </h2>
+              <p className="mt-6 mx-auto max-w-2xl text-lg text-gray-300">
+                Join thousands of companies using Plink to find their perfect candidates. Start your journey today.
+              </p>
             </div>
-            <div className="text-center">
-              <div className="text-5xl font-bold mb-2">50+</div>
-              <div className="text-gray-400">Languages</div>
-            </div>
-            <div className="text-center">
-              <div className="text-5xl font-bold mb-2">75%</div>
-              <div className="text-gray-400">Time Saved</div>
-            </div>
-            <div className="text-center">
-              <div className="text-5xl font-bold mb-2">60%</div>
-              <div className="text-gray-400">Cost Saved</div>
+            <div className="mt-12 sm:mx-auto sm:max-w-lg sm:flex sm:justify-center">
+              <button
+                onClick={login}
+                className="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-xl text-black bg-white hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 md:py-4 md:text-lg md:px-10"
+              >
+                Get Started
+              </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* CTA Section */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="bg-gradient-to-r from-gray-900 to-black rounded-2xl text-white p-12 text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Transform Your Recruitment?</h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            Join thousands of companies who have already revolutionized their hiring process with AI.
-          </p>
-          <button 
-            onClick={login}
-            className="bg-white text-black px-8 py-4 rounded-lg text-lg font-medium hover:bg-gray-100 transition-all transform hover:scale-105 duration-200"
-          >
-            Start Recruiting Now
-          </button>
+      {/* Footer */}
+      <footer className="bg-white">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+          <div className="border-t border-gray-200 pt-8 flex flex-col items-center">
+            <div className="text-2xl font-bold text-gray-900 mb-2">Plink</div>
+            <p className="text-gray-500 text-sm text-center max-w-md">
+              Revolutionizing talent acquisition through AI-powered matching and real-time communication solutions.
+            </p>
+            <div className="mt-6 text-center">
+              <p className="text-sm text-gray-400"> 2024 Plink. All rights reserved.</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 }

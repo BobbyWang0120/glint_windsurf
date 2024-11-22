@@ -7,7 +7,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "AI Talent Hub",
+  title: "Plink",
   description: "AI-powered talent matching platform",
 };
 

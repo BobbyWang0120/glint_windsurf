@@ -12,7 +12,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16 items-center">
           <div className="flex-shrink-0">
             <Link href="/" className="text-xl font-semibold hover:text-gray-600 transition-colors">
-              AI Talent Hub
+              Plink
             </Link>
           </div>
           <div className="flex items-center space-x-4">
