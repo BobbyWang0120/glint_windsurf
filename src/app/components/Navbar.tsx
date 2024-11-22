@@ -3,13 +3,15 @@
 import Link from 'next/link';
 import { useAuth } from '../contexts/AuthContext';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import LoadingAnimation from './LoadingAnimation';
 
 export default function Navbar() {
   const { isLoggedIn, login, logout } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
+  const pathname = usePathname();
 
-  const handleAuthAction = async (action: 'login' | 'signup') => {
+  const handleLogin = async () => {
     setIsLoading(true);
     
     // 等待1秒
@@ -17,7 +19,6 @@ export default function Navbar() {
     
     // 执行登录操作
     login();
-    
     setIsLoading(false);
   };
 
@@ -32,28 +33,37 @@ export default function Navbar() {
                 Plink
               </Link>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-6">
               {isLoggedIn ? (
                 <>
-                  <span className="text-sm text-gray-500">Welcome, Glint</span>
+                  {pathname === '/' ? (
+                    <Link 
+                      href="/jobs" 
+                      className="px-4 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-all transform hover:scale-105 duration-200 shadow-sm"
+                    >
+                      Go to Glint
+                    </Link>
+                  ) : (
+                    <span className="text-sm font-medium text-gray-700">Welcome, Glint</span>
+                  )}
                   <button 
                     onClick={logout}
-                    className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                    className="text-sm text-gray-500 hover:text-gray-900 transition-colors border-l pl-6 border-gray-200"
                   >
                     Logout
                   </button>
                 </>
               ) : (
-                <div className="space-x-4">
+                <div className="flex items-center space-x-6">
                   <button 
-                    onClick={() => handleAuthAction('login')}
-                    className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                    onClick={handleLogin}
+                    className="px-4 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-all transform hover:scale-105 duration-200 shadow-sm"
                   >
                     Login
                   </button>
                   <button 
-                    onClick={() => handleAuthAction('signup')}
-                    className="text-sm bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors"
+                    onClick={handleLogin}
+                    className="text-sm text-gray-500 hover:text-gray-900 transition-colors border-l pl-6 border-gray-200"
                   >
                     Sign Up
                   </button>
