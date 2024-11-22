@@ -14,7 +14,7 @@ export default function ResultsPage() {
           <p className="mt-1 text-sm text-gray-500">Found {mockCandidates.length} potential matches for your job posting</p>
         </div>
         <Link
-          href="/jobs"
+          href="/"
           className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-colors"
         >
           Back to Jobs
