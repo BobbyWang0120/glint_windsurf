@@ -18,29 +18,35 @@ export default function ResultsPage() {
 
       <div className="flex gap-8">
         {/* 左侧候选人列表 */}
-        <div className="w-1/4 space-y-4">
+        <div className="w-1/4 space-y-2">
           {mockCandidates.map((candidate) => (
             <div
               key={candidate.id}
               onClick={() => setSelectedCandidate(candidate)}
-              className={`p-4 rounded-lg cursor-pointer transition-all ${
+              className={`flex items-center justify-between p-3 rounded-lg cursor-pointer transition-all ${
                 selectedCandidate.id === candidate.id
                 ? 'bg-black text-white shadow-lg'
                 : 'bg-white hover:bg-gray-50 shadow'
               }`}
             >
-              <div className="font-medium">{candidate.firstName} {candidate.lastName}</div>
-              <div className={`text-sm ${selectedCandidate.id === candidate.id ? 'text-gray-200' : 'text-gray-500'}`}>
-                {candidate.role}
+              <div className="min-w-0 flex-1">
+                <div className="font-medium truncate">{candidate.firstName} {candidate.lastName}</div>
+                <div className={`text-sm truncate ${
+                  selectedCandidate.id === candidate.id ? 'text-gray-300' : 'text-gray-500'
+                }`}>
+                  {candidate.role}
+                </div>
               </div>
-              <div className="mt-2">
-                <MatchScore value={candidate.matchScore} />
+              <div className={`ml-3 flex-shrink-0 text-lg font-medium ${
+                selectedCandidate.id === candidate.id ? 'text-white' : 'text-gray-900'
+              }`}>
+                {candidate.matchScore}%
               </div>
             </div>
           ))}
         </div>
 
-        {/* 右侧详细信息 */}
+        {/* 右侧详细信息 (保持不变) */}
         <div className="w-3/4 bg-white rounded-lg shadow p-8">
           <div className="space-y-8">
             {/* 头部信息 */}
