@@ -9,17 +9,17 @@ export default function ResultsPage() {
   const [selectedCandidate, setSelectedCandidate] = useState(mockCandidates[0]);
 
   return (
-    <div className="h-screen flex flex-col bg-white py-8">
+    <div className="h-[calc(100vh-64px)] flex flex-col bg-white">
       {/* 固定在顶部的标题部分 */}
-      <div className="flex-none px-8 mb-8 border-b border-gray-200">
-        <div className="flex items-start justify-between pb-6">
+      <div className="flex-none px-8 py-6">
+        <div className="flex items-start justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">AI-Matched Candidates</h2>
-            <p className="mt-1 text-sm text-gray-500">Found {mockCandidates.length} potential matches for your job posting</p>
+            <h1 className="text-3xl font-bold text-gray-900">AI-Matched Candidates</h1>
+            <p className="mt-2 text-base text-gray-500">Found {mockCandidates.length} potential matches for your job posting</p>
           </div>
           <Link
             href="/jobs"
-            className="flex-shrink-0 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
+            className="inline-flex items-center px-6 py-3 bg-black text-white text-sm font-medium rounded-xl hover:bg-gray-800 transition-all"
           >
             Back to Jobs
           </Link>
@@ -63,7 +63,6 @@ export default function ResultsPage() {
         <div className="w-3/4">
           <div className="h-full overflow-y-auto p-8">
             <div className="space-y-8">
-              {/* 保持其他内容不变... */}
               {/* 头部信息 */}
               <div className="flex justify-between items-start">
                 <div>
