@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import MatchScore from '../../../../components/MatchScore';
 import { mockCandidates, DetailedCandidate } from '../../../../data/mockCandidates';
 
@@ -8,11 +9,21 @@ export default function ResultsPage() {
   const [selectedCandidate, setSelectedCandidate] = useState(mockCandidates[0]);
 
   return (
-    <div className="h-screen flex flex-col bg-white">
+    <div className="h-screen flex flex-col bg-white py-8">
       {/* 固定在顶部的标题部分 */}
-      <div className="flex-none px-8 py-6 border-b border-gray-200">
-        <h2 className="text-2xl font-bold text-gray-900">AI-Matched Candidates</h2>
-        <p className="mt-1 text-sm text-gray-500">Found {mockCandidates.length} potential matches for your job posting</p>
+      <div className="flex-none px-8 mb-8 border-b border-gray-200">
+        <div className="flex items-start justify-between pb-6">
+          <div>
+            <h2 className="text-2xl font-bold text-gray-900">AI-Matched Candidates</h2>
+            <p className="mt-1 text-sm text-gray-500">Found {mockCandidates.length} potential matches for your job posting</p>
+          </div>
+          <Link
+            href="/jobs"
+            className="flex-shrink-0 bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
+          >
+            Back to Jobs
+          </Link>
+        </div>
       </div>
 
       {/* 可滚动的主内容区域 */}
@@ -52,6 +63,7 @@ export default function ResultsPage() {
         <div className="w-3/4">
           <div className="h-full overflow-y-auto p-8">
             <div className="space-y-8">
+              {/* 保持其他内容不变... */}
               {/* 头部信息 */}
               <div className="flex justify-between items-start">
                 <div>
