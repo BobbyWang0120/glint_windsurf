@@ -72,8 +72,8 @@ export default function LoadingPage() {
   };
 
   return (
-    <main className="min-h-screen bg-background flex items-center justify-center">
-      <div className="text-center space-y-12">
+    <main className="h-[calc(100vh-64px)] bg-background flex items-center justify-center">
+      <div className="text-center space-y-12 w-[400px]">
         {/* 加载动画 */}
         <div className="flex justify-center">
           <div className="relative w-24 h-24">
@@ -92,17 +92,17 @@ export default function LoadingPage() {
           </p>
         </div>
 
-        {/* 加载步骤 */}
-        <div className="space-y-3 text-sm">
+        {/* 加载步骤 - 内部左对齐 */}
+        <div className="inline-block text-left space-y-3 text-sm">
           {steps.map((step, index) => (
             <div
               key={index}
-              className={`flex items-center justify-center space-x-2
+              className={`flex items-center space-x-3
                 ${step.status === 'completed' ? 'text-green-600' :
                   step.status === 'loading' ? 'text-black animate-pulse' :
                   'text-gray-400'}`}
             >
-              <span className="w-4">{getStepIcon(step.status)}</span>
+              <span className="w-4 flex-shrink-0">{getStepIcon(step.status)}</span>
               <span>{step.text}</span>
             </div>
           ))}
